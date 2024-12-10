@@ -15,3 +15,4 @@ for i in listLeft:
     total = total + (i * listRight.count(i))
 
 print(total)
+print(listLeft)
