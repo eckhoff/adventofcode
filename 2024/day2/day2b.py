@@ -5,6 +5,7 @@ def remove_first_duplicate(lst):
             lst.pop(i)
             return lst
         seen.add(num)
+    return lst
 
 
 def make_sorted_by_removing_one(lst):
@@ -15,13 +16,14 @@ def make_sorted_by_removing_one(lst):
         sublist = lst[:i] + lst[i+1:]
         if is_sorted_helper(sublist) and num_gap(sublist) is True:
             return True
+    return False
 
 
 def is_sorted(lst):
     if len(lst) == len(set(lst)):
-        if lst == sorted(lst) and num_gap(lst) is True:
+        if lst == sorted(lst):
             return True
-        elif lst == sorted(lst, reverse=True) and num_gap(lst) is True:
+        elif lst == sorted(lst, reverse=True):
             return True
         else:
             if make_sorted_by_removing_one(lst) is True:
@@ -31,9 +33,9 @@ def is_sorted(lst):
     else:
         new_lst = remove_first_duplicate(lst)
         if len(new_lst) == len(set(new_lst)):
-            if new_lst == sorted(new_lst) and num_gap(new_lst) is True:
+            if new_lst == sorted(new_lst):
                 return True
-            elif new_lst == sorted(new_lst, reverse=True) and num_gap(new_lst) is True:
+            elif new_lst == sorted(new_lst, reverse=True):
                 return True
             else:
                 return False
@@ -48,12 +50,12 @@ def num_gap(lst):
 
 safe_count = 0
 total = 0
-with open('day2-input.txt', 'r') as file:
+with open('day2-input.txt') as file:
     for line in file:
         value1 = line.split()
         int_value = [int(item) for item in value1]
 
-        if is_sorted(int_value) is True:
+        if is_sorted(int_value) is True and num_gap(int_value) is True:
             print(int_value, True)
             safe_count += 1
             total += 1
