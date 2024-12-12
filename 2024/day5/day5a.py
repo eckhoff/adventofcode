@@ -25,6 +25,8 @@ def get_middle(lst):
 
 
 result = 0
+output = []
+
 for page in pages:
     reversed_page = page[::-1]
     page_statue = True
@@ -36,5 +38,12 @@ for page in pages:
                 break
     if page_statue == True:
         result += get_middle(page)
+    else:
+        output.append(page)
 
 print(result)
+
+# print input file for part 2 of the problem
+with open('part2-pages.txt', 'w') as file:
+    for row in output:
+        file.write(",".join(map(str, row)) + "\n")
