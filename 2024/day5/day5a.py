@@ -29,14 +29,14 @@ output = []
 
 for page in pages:
     reversed_page = page[::-1]
-    page_statue = True
+    page_status = True
     for i in range(len(page)):
         keys = get_key(key, reversed_page[i])
         for number in keys:
             if number in reversed_page[i+1:]:
-                page_statue = False
+                page_status = False
                 break
-    if page_statue == True:
+    if page_status == True:
         result += get_middle(page)
     else:
         output.append(page)
