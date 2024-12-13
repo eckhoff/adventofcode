@@ -7,7 +7,7 @@ with open('input-key.txt') as file:
         parts = line.split('|')
         key.append((int(parts[0].strip()), int(parts[1].strip())))
 
-with open('part2-pages.txt') as file:
+with open('input-pages.txt') as file:
     pages = [list(map(int, line.strip().split(','))) for line in file]
 
 
@@ -25,6 +25,7 @@ def get_middle(lst):
 
 
 result = 0
+unsorted = []
 
 for page in pages:
     reversed_page = page[::-1]
@@ -33,12 +34,25 @@ for page in pages:
         keys = get_key(key, reversed_page[i])
         for number in keys:
             if number in reversed_page[i+1:]:
-                index = reversed_page.index(number)
-                reversed_page[i], reversed_page[index] = reversed_page[index], reversed_page[i]
-                
-    new = reversed_page[::-1]
-    result += get_middle(new)
+                page_status = False
+                break
+    if page_status == True:
+        #result += get_middle(page)
+        result = 0
+    else:
+        unsorted.append(page)
 
+for page in unsorted:
+    reversed_page = page[::-1]
+    for i in range(len(page)):
+        keys = get_key(key, reversed_page[i])
+        for number in keys:
+            if number in reversed_page[i+1:]:
+                index = reversed_page.index(number)
+                reversed_page[index], reversed_page[i] = reversed_page[i], reversed_page[index]
+    result += get_middle(reversed_page)
+    print(reversed_page)
+                
 
 print(result)
 
