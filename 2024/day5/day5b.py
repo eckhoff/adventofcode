@@ -7,7 +7,7 @@ with open('input-key.txt') as file:
         parts = line.split('|')
         key.append((int(parts[0].strip()), int(parts[1].strip())))
 
-with open('input-pages.txt') as file:
+with open('part2-pages.txt') as file:
     pages = [list(map(int, line.strip().split(','))) for line in file]
 
 
@@ -25,7 +25,6 @@ def get_middle(lst):
 
 
 result = 0
-output = []
 
 for page in pages:
     reversed_page = page[::-1]
@@ -34,19 +33,14 @@ for page in pages:
         keys = get_key(key, reversed_page[i])
         for number in keys:
             if number in reversed_page[i+1:]:
-                page_status = False
-                output.append(page)
-                break
-    if page_status == True:
-        result += get_middle(page)
-        '''
-    else:
-        output.append(page)
-        '''
+                index = reversed_page.index(number)
+                reversed_page[i], reversed_page[index] = reversed_page[index], reversed_page[i]
+                
+    new = reversed_page[::-1]
+    result += get_middle(new)
+
 
 print(result)
 
-# print input file for part 2 of the problem
-with open('part2-pages.txt', 'w') as file:
-    for row in output:
-        file.write(",".join(map(str, row)) + "\n")
+# 4444 is too low
+# 4601 is too low
